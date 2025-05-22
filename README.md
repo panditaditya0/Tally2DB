@@ -43,13 +43,13 @@ git clone https://github.com/your-username/tally2sql-exporter.git
 cd tally2sql-exporter
 ```
 
-### 2. Build the Application
+### 2. Package the Application
 
 ```bash
   mvn clean package -DskipTests
 ```
 
-### 3. Run the Application
+### 3. Build docker image the Application
 
 ```bash
 java -jar target/tally2sql-exporter-0.0.1-SNAPSHOT.jar
@@ -58,7 +58,7 @@ sudo docker build -t tally-backup/t:latest -f Dockerfile .
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Docker compose Configuration
 
 Edit the `application.yml` or `application.properties` file to configure:
 
