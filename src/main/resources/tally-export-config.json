@@ -1,0 +1,376 @@
+{
+  "master": [
+    {
+      "name": "mst_group",
+      "collection": "Group",
+      "nature": "Primary",
+      "fields": [
+        {
+          "name": "guid",
+          "field": "Guid",
+          "type": "text"
+        },
+        {
+          "name": "name",
+          "field": "Name",
+          "type": "text"
+        },
+        {
+          "name": "parent",
+          "field": "if $$IsEqual:$Parent:$$SysName:Primary then \"\" else $Parent",
+          "type": "text"
+        },
+        {
+          "name": "primary_group",
+          "field": "_PrimaryGroup",
+          "type": "text"
+        },
+        {
+          "name": "is_revenue",
+          "field": "IsRevenue",
+          "type": "logical"
+        },
+        {
+          "name": "is_deemedpositive",
+          "field": "IsDeemedPositive",
+          "type": "logical"
+        },
+        {
+          "name": "is_reserved",
+          "field": "IsReserved",
+          "type": "logical"
+        },
+        {
+          "name": "affects_gross_profit",
+          "field": "AffectsGrossProfit",
+          "type": "logical"
+        },
+        {
+          "name": "sort_position",
+          "field": "SortPosition",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "mst_ledger",
+      "collection": "Ledger",
+      "nature": "Primary",
+      "fields": [
+        {
+          "name": "guid",
+          "field": "Guid",
+          "type": "text"
+        },
+        {
+          "name": "name",
+          "field": "Name",
+          "type": "text"
+        },
+        {
+          "name": "parent",
+          "field": "if $$IsEqual:$Parent:$$SysName:Primary then \"\" else $Parent",
+          "type": "text"
+        },
+        {
+          "name": "alias",
+          "field": "OnlyAlias",
+          "type": "text"
+        },
+        {
+          "name": "description",
+          "field": "Description",
+          "type": "text"
+        },
+        {
+          "name": "notes",
+          "field": "Narration",
+          "type": "text"
+        },
+        {
+          "name": "is_revenue",
+          "field": "IsRevenue",
+          "type": "logical"
+        },
+        {
+          "name": "is_deemedpositive",
+          "field": "IsDeemedPositive",
+          "type": "logical"
+        },
+        {
+          "name": "opening_balance",
+          "field": "OpeningBalance",
+          "type": "amount"
+        },
+        {
+          "name": "closing_balance",
+          "field": "ClosingBalance",
+          "type": "amount"
+        },
+        {
+          "name": "mailing_name",
+          "field": "MailingName",
+          "type": "text"
+        },
+        {
+          "name": "mailing_address",
+          "field": "if $$IsEmpty:$Address then \"\" else $$FullList:Address:$Address",
+          "type": "text"
+        },
+        {
+          "name": "mailing_state",
+          "field": "LedStateName",
+          "type": "text"
+        },
+        {
+          "name": "mailing_country",
+          "field": "CountryName",
+          "type": "text"
+        },
+        {
+          "name": "mailing_pincode",
+          "field": "PinCode",
+          "type": "text"
+        },
+        {
+          "name": "email",
+          "field": "Email",
+          "type": "text"
+        },
+        {
+          "name": "it_pan",
+          "field": "IncomeTaxNumber",
+          "type": "text"
+        },
+        {
+          "name": "gstn",
+          "field": "if $$IsEmpty:$PartyGSTIN then $LedGSTRegDetails[Last].GSTIN else $PartyGSTIN",
+          "type": "text"
+        },
+        {
+          "name": "gst_registration_type",
+          "field": "if $$IsEmpty:$Gstregistrationtype then $LedGSTRegDetails[Last].Gstregistrationtype else $Gstregistrationtype",
+          "type": "text"
+        },
+        {
+          "name": "gst_supply_type",
+          "field": "Gsttypeofsupply",
+          "type": "text"
+        },
+        {
+          "name": "gst_duty_head",
+          "field": "Gstdutyhead",
+          "type": "text"
+        },
+        {
+          "name": "tax_rate",
+          "field": "RateOfTaxCalculation",
+          "type": "number"
+        },
+        {
+          "name": "bank_account_holder",
+          "field": "Bankaccholdername",
+          "type": "text"
+        },
+        {
+          "name": "bank_account_number",
+          "field": "BankDetails",
+          "type": "text"
+        },
+        {
+          "name": "bank_ifsc",
+          "field": "Ifscode",
+          "type": "text"
+        },
+        {
+          "name": "bank_swift",
+          "field": "Swiftcode",
+          "type": "text"
+        },
+        {
+          "name": "bank_name",
+          "field": "Bankingconfigbank",
+          "type": "text"
+        },
+        {
+          "name": "bank_branch",
+          "field": "BankBranchname",
+          "type": "text"
+        },
+        {
+          "name": "bill_credit_period",
+          "field": "$$Number:$BillCreditPeriod",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "transaction": [
+    {
+      "name": "trn_voucher",
+      "collection": "Voucher",
+      "nature": "Primary",
+      "isChunk" : true,
+      "fetch": [
+        "Narration,PartyLedgerName,PlaceOfSupply,Reference,ReferenceDate,Partygstin"
+      ],
+      "filters": [
+        "NOT $IsCancelled",
+        "NOT $IsOptional"
+      ],
+      "fields": [
+        {
+          "name": "guid",
+          "field": "Guid",
+          "type": "text"
+        },
+        {
+          "name": "date",
+          "field": "Date",
+          "type": "date"
+        },
+        {
+          "name": "voucher_type",
+          "field": "VoucherTypeName",
+          "type": "text"
+        },
+        {
+          "name": "voucher_number",
+          "field": "VoucherNumber",
+          "type": "text"
+        },
+        {
+          "name": "reference_number",
+          "field": "Reference",
+          "type": "text"
+        },
+        {
+          "name": "reference_date",
+          "field": "ReferenceDate",
+          "type": "date"
+        },
+        {
+          "name": "narration",
+          "field": "Narration",
+          "type": "text"
+        },
+        {
+          "name": "party_name",
+          "field": "PartyLedgerName",
+          "type": "text"
+        },
+        {
+          "name": "place_of_supply",
+          "field": "PlaceOfSupply",
+          "type": "text"
+        },
+        {
+          "name": "is_invoice",
+          "field": "IsInvoice",
+          "type": "logical"
+        },
+        {
+          "name": "is_accounting_voucher",
+          "field": "if $$IsAccountingVch:$VoucherTypeName then 1 else 0",
+          "type": "logical"
+        },
+        {
+          "name": "is_inventory_voucher",
+          "field": "if $$IsInventoryVch:$VoucherTypeName then 1 else 0",
+          "type": "logical"
+        },
+        {
+          "name": "is_order_voucher",
+          "field": "if $$IsOrderVch:$VoucherTypeName then 1 else 0",
+          "type": "logical"
+        },
+        {
+          "name": "party_gstin",
+          "field": "Partygstin",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "trn_accounting",
+      "collection": "Voucher.AllLedgerEntries",
+      "nature": "Derived",
+      "isChunk" : true,
+      "fetch": [
+        "AllLedgerEntries,GSTEntries,BasicInfo"
+      ],
+      "filters": [
+        "NOT $IsCancelled",
+        "NOT $IsOptional",
+        "$$NumItems:AllLedgerEntries > 0"
+      ],
+      "fields": [
+        {
+          "name": "guid",
+          "field": "Guid",
+          "type": "text"
+        },
+        {
+          "name": "ledger",
+          "field": "LedgerName",
+          "type": "text"
+        },
+        {
+          "name": "amount",
+          "field": "Amount",
+          "type": "amount"
+        },
+        {
+          "name": "amount_forex",
+          "field": "if $$IsEmpty:$$ForexValue:$Amount then 0 else $$StringFindAndReplace:(if $$IsDebit:$Amount then -$$ForexValue:$Amount else $$ForexValue:$Amount):\"(-)\":\"-\"",
+          "type": "amount"
+        },
+        {
+          "name": "currency",
+          "field": "$$Currency:$Amount",
+          "type": "text"
+        },
+        {
+          "name": "cgst_rate",
+          "field": "$CGSTRate",
+          "type": "text"
+        },
+        {
+          "name": "sgst_rate",
+          "field": "$SGSTRate",
+          "type": "text"
+        },
+        {
+          "name": "igst_rate",
+          "field": "$IGSTRate",
+          "type": "text"
+        },
+        {
+          "name": "gst_applicable",
+          "field": "$IsGSTApplicable",
+          "type": "text"
+        },
+        {
+          "name": "entry_cgst_rate",
+          "field": "$EntryCGSTRate",
+          "type": "text"
+        },
+        {
+          "name": "entry_sgst_rate",
+          "field": "$EntrySGSTRate",
+          "type": "text"
+        },
+        {
+          "name": "entry_igst_rate",
+          "field": "$EntryIGSTRate",
+          "type": "text"
+        },
+        {
+          "name": "is_party_ledger",
+          "field": "$Ispartyledger",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
