@@ -3,7 +3,7 @@
 
 # Tally2SQL Exporter
 
-**Tally2SQL Exporter** is an open-source Spring Boot application designed to **connect to multiple Tally ERP instances** (via IP:PORT), extract data concurrently using **multi-threading**, and export it to a central **SQL database** such as MySQL, PostgreSQL, or any other database supported by JDBC.
+**Tally2SQL Exporter** is an open-source Scaleable Spring Boot application designed to **connect to multiple Tally ERP instances** (via IP:PORT), extract data concurrently using **multi-threading**, and export it to a central **SQL database** such as MySQL, PostgreSQL, or any other database supported by JDBC.
 
 ---
 
